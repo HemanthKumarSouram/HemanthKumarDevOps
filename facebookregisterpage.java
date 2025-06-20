@@ -4,5 +4,4 @@ class Registration {
                           throws Exception
     {
         MyFrame f = new MyFrame();
-    }
-}
+this is devops class
