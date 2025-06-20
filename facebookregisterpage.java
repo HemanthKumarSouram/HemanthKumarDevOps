@@ -1,7 +1,12 @@
-class Registration {
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
 
-    public static void main(String[] args)
-                          throws Exception
-    {
-        MyFrame f = new MyFrame();
-this is devops class
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+
+</body>
+</html>
