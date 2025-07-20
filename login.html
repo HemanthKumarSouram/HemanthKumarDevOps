@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup & View Users</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .user-list {
+      max-width: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Signup Form</h2>
+  <input type="text" id="username" placeholder="Username" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button onclick="signup()">Sign Up</button>
+</div>
+
+<div class="container user-list">
+  <h2>Registered Users</h2>
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="userList">
+      <!-- Users will be listed here -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function signup() {
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!username || !email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check if username already exists
+    const exists = users.some(user => user.username === username);
+    if (exists) {
+      alert("Username already exists!");
+      return;
+    }
+
+    users.push({ username, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("User registered!");
+    document.getElementById("username").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+
+    showUsers();
+  }
+
+  function showUsers() {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const userList = document.getElementById("userList");
+    userList.innerHTML = "";
+
+    users.forEach(user => {
+      const row = `<tr><td>${user.username}</td><td>${user.email}</td></tr>`;
+      userList.innerHTML += row;
+    });
+  }
+
+  // Show users when page loads
+  showUsers();
+</script>
+
+</body>
+</html>
